@@ -1,15 +1,425 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.6">
-  <style type="text/css">
-    body {background-color: #0c0c0c}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop Claude IA — One Soluções Digitais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0D0D0D;
+    --surface: #1A1A1A;
+    --border: #292929;
+    --green: #10B77F;
+    --green-dim: rgba(16,183,127,0.12);
+    --purple: #895AF6;
+    --purple-dim: rgba(137,90,246,0.12);
+    --text: #F5F5F5;
+    --muted: #A0A0A0;
+    --muted-2: #6B6B6B;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  img, svg { max-width: 100%; }
+  a { color: inherit; }
+
+  h1,h2,h3 { font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .pill-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16,183,127,0.3); }
+  .pill-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(137,90,246,0.3); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--green);
+    color: #06231a;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  /* ---------- Header ---------- */
+  header { padding: 28px 0 0 0; }
+  .logo-row { display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: #06231a;
+    flex-shrink: 0;
+  }
+  .logo-name { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+  .logo-sub { font-size: 11px; color: var(--muted-2); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 44px 0 32px 0; }
+  .hero h1 { font-size: 38px; line-height: 1.12; margin: 20px 0 16px 0; }
+  .hero h1 span { color: var(--green); }
+  .hero p.sub { color: #cfcfcf; font-size: 17px; max-width: 560px; margin: 0 0 26px 0; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+
+  .price-box {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .price-box .price-label { font-size: 13px; color: var(--muted); }
+  .price-box .price-value { font-size: 34px; font-weight: 800; }
+  .price-box .price-value span { font-size: 15px; color: var(--muted); font-weight: 500; }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 30px 0; }
+  .eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--purple); margin-bottom: 10px;
+  }
+  section h2 { font-size: 26px; margin-bottom: 10px; }
+  section p.lede { color: var(--muted); font-size: 15px; max-width: 560px; margin: 0 0 22px 0; }
+
+  /* ---------- Modules list ---------- */
+  .module {
+    display: flex;
+    gap: 16px;
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+  }
+  .module:last-child { border-bottom: 1px solid var(--border); }
+  .module-num {
+    font-size: 13px; font-weight: 700; color: var(--muted-2);
+    width: 24px; flex-shrink: 0; padding-top: 2px;
+  }
+  .module-body b { font-size: 16px; display: block; margin-bottom: 4px; }
+  .module-body p { font-size: 14px; color: var(--muted); margin: 0; }
+  .module-body .demo-tag {
+    display: inline-block; margin-top: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--green); background: var(--green-dim);
+    padding: 3px 10px; border-radius: 999px;
+  }
+
+  /* ---------- How it works ---------- */
+  .how-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .how-item { display: flex; gap: 14px; align-items: flex-start; }
+  .how-icon {
+    width: 40px; height: 40px; border-radius: 11px;
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .how-icon svg { width: 19px; height: 19px; }
+  .how-item b { font-size: 15px; display: block; margin-bottom: 3px; }
+  .how-item p { font-size: 13.5px; color: var(--muted); margin: 0; }
+
+  /* ---------- Benefits ---------- */
+  .benefit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .benefit-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 18px;
+  }
+  .benefit-card svg { width: 18px; height: 18px; color: var(--green); margin-bottom: 10px; }
+  .benefit-card p { font-size: 13.5px; margin: 0; color: #d8d8d8; }
+
+  /* ---------- Instructor ---------- */
+  .instructor-card { display: flex; gap: 18px; flex-wrap: wrap; }
+  .instructor-avatar {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: var(--purple-dim); border: 1px solid rgba(137,90,246,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 22px; color: var(--purple);
+    flex-shrink: 0;
+  }
+  .instructor-info h3 { font-size: 19px; margin-bottom: 2px; }
+  .instructor-info .role { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .instructor-info p { font-size: 14px; color: #d0d0d0; margin: 0 0 10px 0; }
+  .instructor-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .micro-badge {
+    font-size: 11.5px; color: var(--muted); background: #141414;
+    border: 1px solid var(--border); padding: 5px 11px; border-radius: 999px;
+  }
+
+  /* ---------- Enroll ---------- */
+  .enroll-card { text-align: center; }
+  .enroll-card .price-value { font-size: 44px; }
+  .enroll-note { font-size: 12.5px; color: var(--muted-2); margin-top: 14px; }
+
+  /* ---------- FAQ ---------- */
+  details {
+    border-top: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  details:last-child { border-bottom: 1px solid var(--border); }
+  summary {
+    cursor: pointer; font-weight: 600; font-size: 15px;
+    list-style: none; display: flex; justify-content: space-between; align-items: center;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: '+'; color: var(--muted); font-size: 20px; font-weight: 400;
+  }
+  details[open] summary::after { content: '–'; }
+  details p { font-size: 14px; color: var(--muted); margin: 12px 0 0 0; }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 36px 0 50px 0; border-top: 1px solid var(--border); margin-top: 20px; }
+  footer .foot-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer .foot-name { font-weight: 700; font-size: 14px; }
+  footer .foot-sub { font-size: 12px; color: var(--muted-2); }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 30px; }
+    .benefit-grid { grid-template-columns: 1fr; }
+    .price-box { flex-direction: column; align-items: flex-start; }
+  }
+</style>
 </head>
 <body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-row">
+      <div class="logo-mark">W</div>
+      <div>
+        <div class="logo-name">Workshop Claude IA</div>
+        <div class="logo-sub">by One Soluções Digitais</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="pill pill-purple">🔴 Ao vivo</span>
+    <h1>Aprenda a usar o <span>Claude</span> na prática — do zero, sem enrolação técnica</h1>
+    <p class="sub">2 horas ao vivo, com demonstração real em cada etapa, pra você sair sabendo transformar conversa em resultado — mesmo sem saber programar.</p>
+
+    <div class="meta-row">
+      <span class="pill pill-green">📅 Sexta, 17/07 às 19h</span>
+      <span class="pill pill-green">🎥 Ao vivo pelo Google Meet</span>
+      <span class="pill pill-green">📼 Gravação liberada pra todos</span>
+    </div>
+
+    <div class="card">
+      <div class="price-box">
+        <div>
+          <div class="price-label">Investimento</div>
+          <div class="price-value">R$ 47<span>,00</span></div>
+        </div>
+      </div>
+      <a href="#inscricao" class="btn">Garantir minha vaga →</a>
+    </div>
+  </section>
+
+  <!-- O QUE VOCÊ VAI APRENDER -->
+  <section>
+    <div class="eyebrow">Conteúdo</div>
+    <h2>O que você vai aprender</h2>
+    <p class="lede">Seis blocos, cada um construindo em cima do anterior — do básico até automatizar tarefas e criar sistemas de verdade.</p>
+
+    <div class="modules">
+      <div class="module">
+        <span class="module-num">01</span>
+        <div class="module-body">
+          <b>Introdução ao Claude</b>
+          <p>O que é, pra que serve e o que diferencia na prática — sem termo técnico.</p>
+        </div>
+      </div>
+      <div class="module">
+        <span class="module-num">02</span>
+        <div class="module-body">
+          <b>Chat</b>
+          <p>Como conversar de um jeito que o contexto se mantém, sem precisar repetir tudo de novo.</p>
+          <span class="demo-tag">Demo ao vivo</span>
+        </div>
+      </div>
+      <div class="module">
+        <span class="module-num">03</span>
+        <div class="module-body">
+          <b>Artefato</b>
+          <p>Como gerar um resultado pronto — documento, dashboard, ferramenta — e compartilhar por link, sem que a outra pessoa precise ter conta.</p>
+          <span class="demo-tag">Demo ao vivo</span>
+        </div>
+      </div>
+      <div class="module">
+        <span class="module-num">04</span>
+        <div class="module-body">
+          <b>Projeto</b>
+          <p>Como manter contexto entre várias conversas — perfeito pra quem atende o mesmo cliente ou assunto toda semana.</p>
+          <span class="demo-tag">Demo ao vivo</span>
+        </div>
+      </div>
+      <div class="module">
+        <span class="module-num">05</span>
+        <div class="module-body">
+          <b>Cowork &amp; Agendamentos</b>
+          <p>Como deixar o Claude rodando tarefas repetitivas sozinho, no horário que você definir.</p>
+          <span class="demo-tag">Demo ao vivo</span>
+        </div>
+      </div>
+      <div class="module">
+        <span class="module-num">06</span>
+        <div class="module-body">
+          <b>Claude Code</b>
+          <p>Como sair do texto e partir pro código de verdade — com demonstração num sistema real em produção.</p>
+          <span class="demo-tag">Demo ao vivo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO VAI FUNCIONAR -->
+  <section>
+    <div class="eyebrow">Formato</div>
+    <h2>Como vai funcionar</h2>
+    <div class="card">
+      <div class="how-grid">
+        <div class="how-item">
+          <span class="how-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10B77F" stroke-width="1.7"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+          <div><b>Ao vivo pelo Google Meet</b><p>Direto, sem gravação prévia — dá pra tirar dúvida na hora.</p></div>
+        </div>
+        <div class="how-item">
+          <span class="how-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10B77F" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+          <div><b>2 horas de duração</b><p>Estruturado em 6 blocos, com pausa pra demonstração em cada um.</p></div>
+        </div>
+        <div class="how-item">
+          <span class="how-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10B77F" stroke-width="1.7"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+          <div><b>Gravação liberada pra todo mundo</b><p>Quem participar recebe o link da gravação depois — sem custo extra, sem pegadinha.</p></div>
+        </div>
+        <div class="how-item">
+          <span class="how-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10B77F" stroke-width="1.7"><path d="M8 12h8M12 8v8"/><circle cx="12" cy="12" r="9"/></svg></span>
+          <div><b>Auxílio individual no privado</b><p>Depois do workshop, quem quiser ajuda pra aplicar isso num desenvolvimento específico pode chamar no privado.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFÍCIOS -->
+  <section>
+    <div class="eyebrow">Por que participar</div>
+    <h2>Pra quem é esse workshop</h2>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>Pra quem nunca usou IA e quer entender na prática, sem jargão técnico.</p>
+      </div>
+      <div class="benefit-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>Pra quem já usa o chat, mas nunca ouviu falar de Artefato, Projeto ou automação.</p>
+      </div>
+      <div class="benefit-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>Pra quem tem um negócio e quer parar de repetir tarefa manual toda semana.</p>
+      </div>
+      <div class="benefit-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>Pra quem quer entender até onde dá pra ir — inclusive gerando sistemas de verdade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTRUTOR -->
+  <section>
+    <div class="eyebrow">Quem ensina</div>
+    <h2>Sobre o Klinger</h2>
+    <div class="card instructor-card">
+      <div class="instructor-avatar">KW</div>
+      <div class="instructor-info">
+        <h3>Klinger Wilkinson</h3>
+        <div class="role">Fundador · One Soluções Digitais</div>
+        <p>Pai, casado, e há 7 anos no mercado construindo soluções pra quem vive de BPO financeiro. Hoje toca a One Soluções Digitais, empresa com 15 clientes ativos e sistemas próprios rodando em produção.</p>
+        <p>Antes de empreender, foi gerente numa multinacional (Ambev), atuando com finanças. Uniu essa vivência a anos de desenvolvimento de sistemas voltados ao nicho de BPO financeiro — é o criador do <strong>Flow BPO</strong> e do <strong>BPO Fácil</strong>, ambos usados de verdade no dia a dia de clientes reais.</p>
+        <div class="instructor-badges">
+          <span class="micro-badge">7 anos de mercado</span>
+          <span class="micro-badge">15 clientes ativos</span>
+          <span class="micro-badge">Criador do Flow BPO</span>
+          <span class="micro-badge">Criador do BPO Fácil</span>
+          <span class="micro-badge">Ex-gerente financeiro · Ambev</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSCRIÇÃO -->
+  <section id="inscricao">
+    <div class="card enroll-card">
+      <div class="pill pill-green" style="margin-bottom:16px;">📅 Sexta, 17/07 às 19h</div>
+      <div class="price-value">R$ 47<span style="font-size:16px;">,00</span></div>
+      <p style="color: var(--muted); font-size: 14px; margin: 10px 0 20px 0;">Acesso à live + gravação + acesso ao grupo de dúvidas</p>
+      <a href="https://mpago.la/2CBuDXp" class="btn" target="_blank" rel="noopener">Quero minha vaga →</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="eyebrow">Dúvidas comuns</div>
+    <h2>Perguntas frequentes</h2>
+    <div>
+      <details open>
+        <summary>Preciso saber programar?</summary>
+        <p>Não. O workshop foi pensado pra quem nunca usou IA — os primeiros blocos não exigem nenhum conhecimento técnico.</p>
+      </details>
+      <details>
+        <summary>E se eu não puder assistir ao vivo?</summary>
+        <p>Sem problema. A gravação completa é liberada pra todo mundo que se inscreveu, então você assiste depois no seu tempo.</p>
+      </details>
+      <details>
+        <summary>Como funciona o auxílio no privado?</summary>
+        <p>Depois do workshop, quem quiser aplicar o que aprendeu em algo específico do seu negócio pode chamar o Klinger no privado pra receber orientação individual.</p>
+      </details>
+      <details>
+        <summary>Onde vai ser?</summary>
+        <p>Tudo online, ao vivo pelo Google Meet. O link é enviado pra quem confirmar a vaga.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-row">
+      <div>
+        <div class="foot-name">One Soluções Digitais</div>
+        <div class="foot-sub">Klinger Wilkinson · Workshop Claude IA</div>
+      </div>
+      <a href="#inscricao" class="btn btn-outline" style="width:auto; padding:10px 20px; font-size:13px;">Garantir vaga</a>
+    </div>
+  </footer>
+
+</div>
 </body>
 </html>
